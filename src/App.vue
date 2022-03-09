@@ -3,7 +3,9 @@
       <h1>POKEDEX</h1> 
       <form>
         <input class="ipt-txt" type="text">
-        <input class="ipt-btn" type="submit" value="search">
+        <!-- <input class="ipt-btn" type="submit" value="search"> -->
+        <button class="btn"><i class="fa fa-home"></i></button>
+        <Button icon="pi pi-search" class="p-button-warning"/>
       </form>
   </body>
 </template>
@@ -12,7 +14,7 @@
 // import HelloWorld from './components/HelloWorld.vue'
 
 export default {
-
+  
 }
 </script>
 
@@ -41,7 +43,8 @@ export default {
 
   form {
     text-align: center;
-    padding-top: 5rem;
+    padding-top: 5.3rem;
+    opacity: 0.7;
   }
 
   .ipt-txt {
