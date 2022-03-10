@@ -1,20 +1,32 @@
 <template>
-  <body class="bkg-img">
+  <body class="bkg-img" v-if="!showPokemon" >
       <h1>POKEDEX</h1> 
       <form>
         <input class="ipt-txt" type="text">
-        <!-- <input class="ipt-btn" type="submit" value="search"> -->
-        <button class="btn"><i class="fa fa-home"></i></button>
-        <Button icon="pi pi-search" class="p-button-warning"/>
+        <Button  @click="searchPokemon"  icon="pi pi-search" class="ipt-btn" type="submit"/>
+        <pokemon v-if="showPokemon"></pokemon>
       </form>
   </body>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
+import Pokemon from "./components/Pokemon.vue";
 
 export default {
-  
+  components: {
+    Pokemon
+  },
+
+  data() {
+    return {
+      showPokemon: false
+    }
+  },
+  methods: {
+    searchPokemon() {
+      this.showPokemon = true;
+    }
+  }
 }
 </script>
 
@@ -22,8 +34,8 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
   #app {
     font-family: 'Montserrat', sans-serif;
-    background-color: #E06666;
-    background-image: url(https://www.itl.cat/pngfile/big/293-2935792_implied-pokeball-wallpaper-by-giovanni-cotonecoda-fur-circle.png);
+    background-color: #7F0D0D;
+    background-image: url('https://snz04pap002files.storage.live.com/y4mgZ9rb2dmOiohC0scRKs5C50GLjrTN8FbjqWQsLPaBUTngUBL903o5sMfn-F6Y3sg7q9qjkQ0B4uU4VT_iXOg6tjSapdUMUyt1zeN0Q8AguAx-sHYhkYTaO4nIf0lcMKcYpPiR2NUzUeL7K-i18xsCLdgq-Jl2-AI8tNlIFNC7kJApE9r3yggookqo-PAz4Mf?width=1024&height=576&cropmode=none');
     background-position: center;
     width: 100vw;
     height: 100vh;
@@ -35,32 +47,40 @@ export default {
 
   h1 {
     margin-top: 0;
-    padding-top: 50px;
+    padding-top: 30px;
     text-align: center;
     font-size: 5rem;
     color: whitesmoke;
+    text-shadow: 5px 5px 5px #000000;
   }
 
   form {
     text-align: center;
-    padding-top: 5.3rem;
-    opacity: 0.7;
+    padding-top: 5.5rem;
   }
 
   .ipt-txt {
-    width: 20vw;
-    padding: 10px 15px 10px 15px;
+    width: 25vw;
+    padding: 15px 15px 15px 15px;
     font-size: 1rem;
-    border-radius: 5px;
+    font-weight: bold;
+    color: #c03b3b;
+    border-radius: 80px;
     border: none;
+    background-color: whitesmoke;
+    opacity: 0.9;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
   }
 
   .ipt-btn {
-    width: 7vw;
-    padding: 10px 15px 10px 15px;
-    font-size: 1rem;
-    color: darkgray;
-
+    /* width: 5vw; */
+    padding: 10px 15px;
+    font-size: 1.5rem;
+    background-color: #c03b3b;
+    border: none;
+    border-radius: 50px;
+    color: whitesmoke;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
   }
 
 </style>
