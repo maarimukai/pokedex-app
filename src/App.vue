@@ -1,30 +1,27 @@
 <template>
-  <body class="bkg-img" v-if="!showPokemon" >
-      <h1>POKEDEX</h1> 
-      <form>
-        <input class="ipt-txt" type="text">
-        <Button  @click="searchPokemon"  icon="pi pi-search" class="ipt-btn" type="submit"/>
-        <pokemon v-if="showPokemon"></pokemon>
-      </form>
-  </body>
+  <form v-if="!searchPokemon">
+    <h1>POKEDEX</h1>
+    <input class="ipt-txt" type="text">
+    <Button @click="showPokemon" icon="pi pi-search" class="ipt-btn" type="submit"/>
+  </form>
+      <show-pokemon v-if="searchPokemon" ></show-pokemon>
 </template>
 
 <script>
-import Pokemon from "./components/Pokemon.vue";
+import ShowPokemon from "./components/ShowPokemon.vue";
 
 export default {
   components: {
-    Pokemon
+    ShowPokemon
   },
-
   data() {
     return {
-      showPokemon: false
+      searchPokemon: false
     }
   },
   methods: {
-    searchPokemon() {
-      this.showPokemon = true;
+    showPokemon() {
+      this.searchPokemon = true;
     }
   }
 }
