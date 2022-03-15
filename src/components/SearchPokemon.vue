@@ -1,52 +1,74 @@
 <template>
-  <div class="forms" v-if="!searchPokemon">
-    <form>
-      <h1>POKEDEX</h1>
-      <input class="ipt-txt" type="text">
-      <Button @click="showPokemon" icon="pi pi-search" class="ipt-btn" type="submit"/>
-    </form>
+  <div class="main" v-if="!searchPokemon">
+    <div class="form">
+      <img src="../assets/logo.png" alt="pokemon logo">
+      <div>
+        <input class="ipt-txt" type="text" placeholder="Search Pokemon" v-model="search">
+        <Button @click="showPokemon" icon="pi pi-search" class="ipt-btn" type="submit"/>
+      </div>
+      <!-- <h1>POKEDEX</h1> -->
+      <!-- <input class="ipt-txt" type="text">
+      <Button @click="showPokemon" icon="pi pi-search" class="ipt-btn" type="submit"/> -->
+    </div>
   </div>
-  <show-pokemon v-if="searchPokemon" ></show-pokemon>
-  <!-- <div v-for="(pokemon, index) in list" :key="index">
-    {{pokemon.name}}
-  </div> -->
+  <div v-if="searchPokemon">
+    <div :key="pokemon.url" v-for="(pokemon, index) in filteredPokemons">
+      <show-pokemon :index="index + 1" :name="pokemon.name" :url="pokemon.url"/>
+    </div>
+  </div>
 </template>
 
 <script>
 import ShowPokemon from "./ShowPokemon.vue";
-import { getPokemonList } from "../service/pokemon-service.js";
-import { onMounted, ref } from "vue";
+import api from "../service/pokemon-service.js";
+// import { onMounted, ref } from "vue";
 
 export default {
-  setup() {
-      const list = ref ([]);
-
-      onMounted(() => {
-          getPokemonList().then(resp => {
-              list.value = resp.results;
-          });
-      });
-
-      return { list };
-  },
   components: {
     ShowPokemon
   },
+  // setup() {
+  //     const list = ref ([]);
+
+  //     onMounted(() => {
+  //         api().then(resp => {
+  //             list.value = resp.results;
+  //         });
+  //     });
+
+  //     return { list };
+  // },
   data() {
     return {
-      searchPokemon: false
+      searchPokemon: false,
+      pokemons: [],
+      filteredPokemons: [],
+      search: ''
     }
+  },
+    created() {
+    api.get('pokemon?limit=151').then((response) => {
+      this.pokemons = response.data.results;
+      this.filteredPokemons = response.data.results;
+    });
   },
   methods: {
     showPokemon() {
       this.searchPokemon = true;
+      this.filteredPokemons = this.pokemons;
+      if(this.search == '' || this.search == ' ') {
+        this.filteredPokemons = this.pokemons;
+      }  else {
+        this.filteredPokemons = this.pokemons.filter((pokemon) => pokemon.name == this.search);
+      }
+      console.log(this.search)
     }
   }
 }
 </script>
 
 <style>
-  .forms {
+  .main {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -55,18 +77,20 @@ export default {
     height: 100vh;
   }
 
-  form {
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     background-color: rgba(255, 255, 255, 0.5);
-    padding: 4rem 3rem;
+    padding: 5rem 3rem;
     border-radius: 3rem;  
   }
 
-  h1 {
+  img {
+    width: 50%;
     margin-top: 0;
-    text-align: center;
-    font-size: 5rem;
-    color: whitesmoke;
-    text-shadow: 5px 5px 5px #000000;
+    margin-bottom: 3rem;
   }
 
 
