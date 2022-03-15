@@ -6,6 +6,7 @@ import SearchPokemon from "./components/SearchPokemon";
 
 import PrimeVue from 'primevue/config';
 import Button from 'primevue/button';
+import InputText from 'primevue/inputtext'
 import 'primeicons/primeicons.css';
 
 const router = createRouter({
@@ -19,6 +20,7 @@ const router = createRouter({
 
 const app = createApp(App);
 app.component("Button", Button);
+app.component("InputText", InputText);
 app.use(PrimeVue);
 app.use(router);
 app.mount('#app');
