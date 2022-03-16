@@ -1,7 +1,7 @@
 <template>
   <div class="main" v-if="!searchPokemon">
     <div class="form">
-      <img src="../assets/logo.png" alt="pokemon logo">
+      <img src="../assets/pokedex.png" alt="pokemon logo">
       <div>
         <input class="ipt-txt" type="text" placeholder="Search Pokemon" v-model="search">
         <Button @click="showPokemon" icon="pi pi-search" class="ipt-btn" type="submit"/>
@@ -83,14 +83,13 @@ export default {
     align-items: center;
     justify-content: center;
     background-color: rgba(255, 255, 255, 0.5);
-    padding: 5rem 3rem;
+    padding: 5rem 5rem;
     border-radius: 3rem;  
   }
 
   img {
-    width: 50%;
     margin-top: 0;
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
   }
 
 
@@ -100,6 +99,7 @@ export default {
     padding: 15px;
     font-size: 1.5rem;
     font-weight: bold;
+    text-align: center;
     color: #c03b3b;
     border-radius: 80px;
     border: none;
