@@ -6,8 +6,8 @@
     </nav>
     <main>
         <div class="identification">
-            <p>#{{ index }}</p>
-            <p>{{ name || upperCase }}</p>
+            <p>#{{ index }}. {{ name || upperCase }}</p>
+            <!-- <p>{{ name || upperCase }}</p> -->
         </div>
         <div>
             <div class="pokeImage">
@@ -21,6 +21,7 @@
         <div class="pokeInfos">
             <div class="pokeType">
                 <p>Type</p>
+                <p>{{ pokemon.type }}</p>
             </div>
             <div class="pokeAttacks">
                 <p>Special Attacks</p>
@@ -33,19 +34,34 @@
 </template>
 
 <script>
-// import api from '../service/pokemon-service'
+import api from '../service/pokemon-service';
+
 export default {
-    name: 'Pokemon',
     props: {
         index: Number,
         name: String,
         url: String
     },
-    // created() {
-    //     api.get(this.url).then((response) => {
-    //         console.log(this.url)
-    //     })
-    // }
+    created() {
+        api.get(this.url).then((response) => {
+            this.pokemon.type = response.data.types[0].type.name;
+            this.currentImg = response.data.sprites.front_default;
+        });
+    },
+    data() {
+        return {
+            currentImg: '',
+            pokemon: {
+                type:''
+            }
+        }
+    },
+    filters: {
+        upperCase: function(value) {
+            var newName = value[0].toUpperCase() + value.slice(1);
+            return newName;
+    }
+  }
 }
 </script>
 

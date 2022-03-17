@@ -46,8 +46,8 @@ export default {
       search: ''
     }
   },
-    created() {
-    api.get('pokemon?limit=151').then((response) => {
+  created() {
+    api.get('pokemon?limit=151&offset=0').then((response) => {
       this.pokemons = response.data.results;
       this.filteredPokemons = response.data.results;
     });
@@ -61,7 +61,6 @@ export default {
       }  else {
         this.filteredPokemons = this.pokemons.filter((pokemon) => pokemon.name == this.search);
       }
-      console.log(this.search)
     }
   }
 }
