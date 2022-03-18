@@ -6,9 +6,6 @@
         <input class="ipt-txt" type="text" placeholder="Search Pokemon" v-model="search">
         <Button @click="showPokemon" icon="pi pi-search" class="ipt-btn" type="submit"/>
       </div>
-      <!-- <h1>POKEDEX</h1> -->
-      <!-- <input class="ipt-txt" type="text">
-      <Button @click="showPokemon" icon="pi pi-search" class="ipt-btn" type="submit"/> -->
     </div>
   </div>
   <div v-if="searchPokemon">
@@ -27,17 +24,6 @@ export default {
   components: {
     ShowPokemon
   },
-  // setup() {
-  //     const list = ref ([]);
-
-  //     onMounted(() => {
-  //         api().then(resp => {
-  //             list.value = resp.results;
-  //         });
-  //     });
-
-  //     return { list };
-  // },
   data() {
     return {
       searchPokemon: false,
