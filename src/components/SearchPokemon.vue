@@ -3,8 +3,19 @@
     <div class="form">
       <img src="../assets/pokedex.png" alt="pokemon logo">
       <div>
-        <input class="ipt-txt" type="text" placeholder="Search Pokemon" v-model="search">
-        <Button @click="showPokemon" icon="pi pi-search" class="ipt-btn" type="submit"/>
+        <input 
+          v-model="value"
+          class="ipt-txt"
+          type="text"
+          v-on:keyup.enter="search(value)" 
+          placeholder="Search Pokemon" 
+        />
+        <Button
+          @click="search(value)" 
+          icon="pi pi-search" 
+          class="ipt-btn" 
+          type="submit"
+        />
       </div>
     </div>
   </div>
@@ -24,12 +35,14 @@ export default {
   components: {
     ShowPokemon
   },
+  name: 'SearchPokemon',
   data() {
     return {
       searchPokemon: false,
       pokemons: [],
       filteredPokemons: [],
-      search: ''
+      // search: '',
+      value: ''
     }
   },
   created() {
@@ -39,7 +52,10 @@ export default {
     });
   },
   methods: {
-    showPokemon() {
+    search(id = this.value) {
+      this.$router.push({ name: 'pokemon', params: { id } })
+    },
+    showPokemon(route) {
       this.searchPokemon = true;
       this.filteredPokemons = this.pokemons;
       if(this.search == '' || this.search == ' ') {
@@ -47,6 +63,7 @@ export default {
       }  else {
         this.filteredPokemons = this.pokemons.filter((pokemon) => pokemon.name == this.search);
       }
+      this.$router.push(route);
     }
   }
 }
