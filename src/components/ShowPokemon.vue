@@ -11,7 +11,7 @@
         </div>
         <div>
             <div class="pokeImage">
-                <img :src="currentImg" alt="Placeholder image">
+                <img :src="getPokemonImage(getPokemonId(pokemons.url))" alt="Placeholder image">
             </div>
             <div class="size">
                 <p>Weight:</p>
@@ -34,34 +34,43 @@
 </template>
 
 <script>
-import api from '../service/pokemon-service';
+// import api from '@/api';
 
 export default {
-    props: {
-        index: Number,
-        name: String,
-        url: String
-    },
-    created() {
-        api.get(this.url).then((response) => {
-            this.pokemon.type = response.data.types[0].type.name;
-            this.currentImg = response.data.sprites.front_default;
-        });
-    },
-    data() {
-        return {
-            currentImg: '',
-            pokemon: {
-                type:''
-            }
-        }
-    },
-    filters: {
-        upperCase: function(value) {
-            var newName = value[0].toUpperCase() + value.slice(1);
-            return newName;
-    }
-  }
+    // setup() {
+    //     const getPokemonId = url => 
+    //         url.replace("https://pokeapi.co/api/v2/pokemon/","").replace("/", "");
+
+    //     const getPokemonImage = id => getPokemonImageUrl(id);
+
+    //     return { getPokemonId, getPokemonImage };
+    // }
+
+//     props: {
+//         index: Number,
+//         name: String,
+//         url: String
+//     },
+//     created() {
+//         getPokemon(this.url).then((response) => {
+//             this.pokemon.type = response.data.types[0].type.name;
+//             this.currentImg = response.data.sprites.front_default;
+//         });
+//     },
+//     data() {
+//         return {
+//             currentImg: '',
+//             pokemon: {
+//                 type:''
+//             }
+//         }
+//     },
+//     filters: {
+//         upperCase: function(value) {
+//             var newName = value[0].toUpperCase() + value.slice(1);
+//             return newName;
+//     }
+//   }
 }
 </script>
 

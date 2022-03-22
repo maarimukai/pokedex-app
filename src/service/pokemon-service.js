@@ -1,11 +1,21 @@
-// const getPokemonImageUrl = id => {
-//     return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
-// }
-
 import axios from 'axios';
 
-const api = axios.create({
-  baseURL: 'https://pokeapi.co/api/v2/',
-});
+const getPokemonList = async () => {
+  const resp = await axios.get("https://pokeapi.co/api/v2/pokemon/?limit=151");
+  return resp.data;
+}
 
-export default api;
+const getPokemon = async id => {
+  const resp = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
+  return resp.data;
+}
+
+const getPokemonImageUrl = id => {
+  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
+}
+
+export {
+  getPokemonList,
+  getPokemon,
+  getPokemonImageUrl
+} 

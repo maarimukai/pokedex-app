@@ -20,7 +20,7 @@
     </div>
   </div>
   <div v-if="searchPokemon">
-    <div :key="pokemon.url" v-for="(pokemon, index) in filteredPokemons">
+    <div :key="pokemon.url" v-for="(pokemon, index) in list">
       <show-pokemon :index="index + 1" :name="pokemon.name" :url="pokemon.url"/>
     </div>
   </div>
@@ -28,42 +28,45 @@
 
 <script>
 import ShowPokemon from "./ShowPokemon.vue";
-import api from "../service/pokemon-service.js";
-// import { onMounted, ref } from "vue";
+import { getPokemonList } from "../service/pokemon-service.js";
+import { onMounted, ref } from "vue";
 
 export default {
   components: {
     ShowPokemon
   },
   name: 'SearchPokemon',
+  setup() {
+    const list = ref([]);
+
+    onMounted(() => {
+      getPokemonList().then(resp => {
+        list.value = resp.results;
+        console.log(list);
+      });
+    });
+
+    return{ list };
+  },
+  props: {
+    pokemon: {
+      type: Object,
+      default: () => {},
+    }
+  },
   data() {
     return {
       searchPokemon: false,
-      pokemons: [],
-      filteredPokemons: [],
-      // search: '',
-      value: ''
+      value: '',
+      pokemon: [],
     }
-  },
-  created() {
-    api.get('pokemon?limit=151&offset=0').then((response) => {
-      this.pokemons = response.data.results;
-      this.filteredPokemons = response.data.results;
-    });
   },
   methods: {
     search(id = this.value) {
       this.$router.push({ name: 'pokemon', params: { id } })
     },
-    showPokemon(route) {
+    showPokemon() {
       this.searchPokemon = true;
-      this.filteredPokemons = this.pokemons;
-      if(this.search == '' || this.search == ' ') {
-        this.filteredPokemons = this.pokemons;
-      }  else {
-        this.filteredPokemons = this.pokemons.filter((pokemon) => pokemon.name == this.search);
-      }
-      this.$router.push(route);
     }
   }
 }
