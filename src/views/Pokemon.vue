@@ -6,9 +6,7 @@
 import ShowPokemon from "../components/ShowPokemon.vue";
 
 export default {
-    components: {
-        ShowPokemon
-    }
+    components: { ShowPokemon }
 
 }
 </script>
