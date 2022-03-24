@@ -3,24 +3,16 @@
     <div class="form">
       <img src="../assets/pokedex.png" alt="pokemon logo">
       <div>
-        <input 
-          v-model="value"
-          class="ipt-txt"
-          type="text"
-          v-on:keyup.enter="search(value)" 
-          placeholder="Search Pokemon" 
-        />
-        <Button
-          @click="search(value)" 
-          icon="pi pi-search" 
-          class="ipt-btn" 
-          type="submit"
-        />
+        <input class="ipt-txt" type="text" placeholder="Search Pokemon" v-model="search">
+        <!-- <Button @click="showPokemon" icon="pi pi-search" class="ipt-btn" type="submit"/> -->
+        <router-link to="/pokemon/:id">
+          <Button @click="showPokemon" icon="pi pi-search" class="ipt-btn" type="submit"/>
+        </router-link>
       </div>
     </div>
   </div>
   <div v-if="searchPokemon">
-    <div :key="pokemon.url" v-for="(pokemon, index) in list">
+    <div :key="pokemon.url" v-for="(pokemon, index) in filteredPokemons">
       <show-pokemon :index="index + 1" :name="pokemon.name" :url="pokemon.url"/>
     </div>
   </div>
@@ -28,45 +20,40 @@
 
 <script>
 import ShowPokemon from "./ShowPokemon.vue";
-import { getPokemonList } from "../service/pokemon-service.js";
-import { onMounted, ref } from "vue";
+import api from "../service/pokemon-service.js";
+// import { onMounted, ref } from "vue";
 
 export default {
   components: {
     ShowPokemon
   },
-  name: 'SearchPokemon',
-  setup() {
-    const list = ref([]);
-
-    onMounted(() => {
-      getPokemonList().then(resp => {
-        list.value = resp.results;
-        console.log(list);
-      });
-    });
-
-    return{ list };
-  },
-  props: {
-    pokemon: {
-      type: Object,
-      default: () => {},
-    }
-  },
   data() {
     return {
       searchPokemon: false,
-      value: '',
-      pokemon: [],
+      pokemons: [],
+      filteredPokemons: [],
+      search: ''
     }
   },
+  created() {
+    api.get('pokemon?limit=151&offset=0').then((response) => {
+      this.pokemons = response.data.results;
+      this.filteredPokemons = response.data.results;
+    });
+    this.$watch(() => this.$route.params, 
+      (toParams, previousParams) => {
+        // react to route changes...
+        console.log(toParams);
+        console.log(previousParams);
+        //TIRAR O V-IF
+      }
+    )
+  },
   methods: {
-    search(id = this.value) {
-      this.$router.push({ name: 'pokemon', params: { id } })
-    },
     showPokemon() {
       this.searchPokemon = true;
+      this.filteredPokemons = this.pokemons.filter((pokemon) => pokemon.name == this.search);
+      console.log(this.search);
     }
   }
 }

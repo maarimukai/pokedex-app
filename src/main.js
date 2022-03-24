@@ -8,12 +8,14 @@ import PrimeVue from 'primevue/config';
 import Button from 'primevue/button';
 import 'primeicons/primeicons.css';
 
+const routes = [
+    { path: "/", component: SearchPokemon },
+    { path: "/pokemon/:id", name: "pokemon", component: ShowPokemon }
+]
+
 const router = createRouter({
     history: createWebHistory(),
-    routes: [
-        { path: "/", name:'home', component: SearchPokemon },
-        { path: "/pokemon/:id", name: "pokemon", component: ShowPokemon }
-    ]
+    routes
 });
 
 
@@ -21,4 +23,6 @@ const app = createApp(App);
 app.component("Button", Button);
 app.use(PrimeVue);
 app.use(router);
+
+
 app.mount('#app');

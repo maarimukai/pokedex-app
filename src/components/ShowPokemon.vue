@@ -6,12 +6,12 @@
     </nav>
     <main>
         <div class="identification">
-            <p>#{{ index }}. {{ name || upperCase }}</p>
+            <p>#{{ index }}. {{ coisa }}</p>
             <!-- <p>{{ name || upperCase }}</p> -->
         </div>
         <div>
             <div class="pokeImage">
-                <img :src="getPokemonImage(getPokemonId(pokemons.url))" alt="Placeholder image">
+                <img :src="currentImg" alt="Placeholder image">
             </div>
             <div class="size">
                 <p>Weight:</p>
@@ -20,7 +20,9 @@
         </div>
         <div class="pokeInfos">
             <div class="pokeType">
-                <p>Type</p>
+                <!-- USAR V-FOR -->
+                <p>Type</p> 
+                <p>{{ pokemon.type }}</p>
                 <p>{{ pokemon.type }}</p>
             </div>
             <div class="pokeAttacks">
@@ -34,42 +36,36 @@
 </template>
 
 <script>
-// import api from '@/api';
+import api from '../service/pokemon-service';
 
 export default {
-    // setup() {
-    //     const getPokemonId = url => 
-    //         url.replace("https://pokeapi.co/api/v2/pokemon/","").replace("/", "");
-
-    //     const getPokemonImage = id => getPokemonImageUrl(id);
-
-    //     return { getPokemonId, getPokemonImage };
+    props: {
+        index: Number,
+        name: String,
+        url: String
+    },
+    created() {
+        api.get(`https://pokeapi.co/api/v2/pokemon/${this.$route.params.id}`).then((response) => {
+            this.pokemon.type = response.data.types[0].type.name;
+            this.currentImg = response.data.sprites.front_default;
+            this.coisa = response.data.name;
+            console.log(response.data);
+            console.log(this.$route.params);
+        });
+    },
+    data() {
+        return {
+            currentImg: '',
+            pokemon: {
+                type:''
+            }
+        }
+    },
+    // filters: {
+    //     upperCase: function(value) {
+    //         var newName = value[0].toUpperCase() + value.slice(1);
+    //         return newName;
     // }
-
-//     props: {
-//         index: Number,
-//         name: String,
-//         url: String
-//     },
-//     created() {
-//         getPokemon(this.url).then((response) => {
-//             this.pokemon.type = response.data.types[0].type.name;
-//             this.currentImg = response.data.sprites.front_default;
-//         });
-//     },
-//     data() {
-//         return {
-//             currentImg: '',
-//             pokemon: {
-//                 type:''
-//             }
-//         }
-//     },
-//     filters: {
-//         upperCase: function(value) {
-//             var newName = value[0].toUpperCase() + value.slice(1);
-//             return newName;
-//     }
 //   }
 }
 </script>
