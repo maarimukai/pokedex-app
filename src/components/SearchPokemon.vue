@@ -1,38 +1,25 @@
 <template>
-  <div class="main" v-if="!searchPokemon">
+  <div class="main">
     <div class="form">
       <img src="../assets/pokedex.png" alt="pokemon logo">
       <div>
-        <input class="ipt-txt" type="text" placeholder="Search Pokemon" v-model="search">
-        <!-- <Button @click="showPokemon" icon="pi pi-search" class="ipt-btn" type="submit"/> -->
-        <router-link to="/pokemon/:id">
-          <Button @click="showPokemon" icon="pi pi-search" class="ipt-btn" type="submit"/>
-        </router-link>
+        <input class="ipt-txt" type="text" placeholder="Search Pokemon" v-model="value">
+        <Button @click="showPokemon(value)" icon="pi pi-search" class="ipt-btn" type="submit"/>
       </div>
-    </div>
-  </div>
-  <div v-if="searchPokemon">
-    <div :key="pokemon.url" v-for="(pokemon, index) in filteredPokemons">
-      <show-pokemon :index="index + 1" :name="pokemon.name" :url="pokemon.url"/>
     </div>
   </div>
 </template>
 
 <script>
-import ShowPokemon from "./ShowPokemon.vue";
 import api from "../service/pokemon-service.js";
-// import { onMounted, ref } from "vue";
 
 export default {
-  components: {
-    ShowPokemon
-  },
   data() {
     return {
-      searchPokemon: false,
       pokemons: [],
       filteredPokemons: [],
-      search: ''
+      search: '',
+      value: ''
     }
   },
   created() {
@@ -46,14 +33,13 @@ export default {
         console.log(toParams);
         console.log(previousParams);
         //TIRAR O V-IF
-      }
-    )
+      })
   },
   methods: {
-    showPokemon() {
-      this.searchPokemon = true;
+    showPokemon(id = this.value) {
       this.filteredPokemons = this.pokemons.filter((pokemon) => pokemon.name == this.search);
       console.log(this.search);
+      this.$router.push({ name: 'pokemon', params: { id } })
     }
   }
 }
