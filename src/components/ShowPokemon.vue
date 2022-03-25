@@ -6,7 +6,7 @@
     </nav>
     <main>
         <div class="identification">
-            <p>#{{ index }}. {{ coisa }}</p>
+            <p>#{{ pokeindex }}. {{ coisa }}</p>
             <!-- <p>{{ name || upperCase }}</p> -->
         </div>
         <div>
@@ -49,6 +49,7 @@ export default {
             this.pokemon.type = response.data.types[0].type.name;
             this.currentImg = response.data.sprites.front_default;
             this.coisa = response.data.name;
+            this.pokeindex = response.data.id;
             console.log(response.data);
             console.log(this.$route.params);
         });

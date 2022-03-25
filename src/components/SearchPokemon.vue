@@ -27,13 +27,6 @@ export default {
       this.pokemons = response.data.results;
       this.filteredPokemons = response.data.results;
     });
-    this.$watch(() => this.$route.params, 
-      (toParams, previousParams) => {
-        // react to route changes...
-        console.log(toParams);
-        console.log(previousParams);
-        //TIRAR O V-IF
-      })
   },
   methods: {
     showPokemon(id = this.value) {
