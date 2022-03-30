@@ -1,11 +1,11 @@
 <template>
   <div class="main">
     <div class="form">
-      <img src="../assets/pokedex.png" alt="pokemon logo">
-      <div>
+      <img class="imglogo" src="../assets/pokedex.png" alt="pokemon logo">
+      <form>
         <input class="ipt-txt" type="text" placeholder="Search Pokemon" v-model="value">
         <Button @click="showPokemon(value)" icon="pi pi-search" class="ipt-btn" type="submit"/>
-      </div>
+      </form>
     </div>
   </div>
 </template>
@@ -58,7 +58,7 @@ export default {
     border-radius: 3rem;  
   }
 
-  img {
+  .imglogo {
     margin-top: 0;
     margin-bottom: 4rem;
   }
