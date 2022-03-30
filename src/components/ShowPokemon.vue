@@ -20,9 +20,9 @@
         </div>
         <div class="pokeInfos">
             <div class="pokeType">
-                <p>Type</p> 
-                <div v-for="item in poketypes" :key="item">
-                    <p>{{ item.type.name }}</p>
+                <h4>Type</h4> 
+                <div class="type-box" v-for="item in poketypes" :key="item" :class="item.type.name.toLowerCase()">
+                    <p>{{ item.type.name.toUpperCase() }}</p>
                 </div>
             </div>
             <div class="pokeAttacks">
@@ -36,13 +36,15 @@
 </template>
 
 <script>
+import { reactive } from '@vue/reactivity';
 import api from '../service/pokemon-service';
 
 export default {
     props: {
         index: Number,
         name: String,
-        url: String
+        url: String,
+        pokemons: { type: Object }
     },
     created() {
         api.get(`https://pokeapi.co/api/v2/pokemon/${this.$route.params.id}`).then((response) => {
@@ -54,7 +56,34 @@ export default {
             this.pokeheight = response.data.height;
         });
         
+        const state = reactive({
+            colors: {
+                normal: "#d3d3af",
+                fighting: "#d56723",
+                flying: "#a1d1f8",
+                poison: "#7fa8c9",
+                ground: "#7c7e29",
+                rock: "#a38c21",
+                bug: "#729f3f",
+                ghost: "#7b62a3",
+                steel: "#9eb7b8",
+                fire: "#fd7d24",
+                water: "#4592c4",
+                grass: "#9bcc50",
+                electric: "#eed535",
+                psychic: "#f366b9",
+                ice: "#51c4e7",
+                dragon: "#3d167c",
+                dark: "#303030",
+                fairy: "#fdb9e9",
+                unknown: "#000",
+                shadow: "#333",
+            }
+        });
+        console.log(state.poketypes);
+        console.log(reactive);
     },
+
     data() {
         return {
             currentImg: '',
@@ -63,13 +92,8 @@ export default {
             }
         }
     },
-    // filters: {
-    //     upperCase: function(value) {
-    //         var newName = value[0].toUpperCase() + value.slice(1);
-    //         return newName;
-    // }
-//   }
 }
+
 </script>
 
 <style scoped>
@@ -100,5 +124,33 @@ export default {
     img {
         width: 12vw;
         margin-bottom: 0;
+    }
+
+    .type-box {
+        display: inline-block;
+        font-weight: 400;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        border: 1px solid transparent;
+        padding: 0.175rem 0.5rem 0.16rem 0.5rem;
+        margin: 3px 7.5px 3px 0;
+        font-size: 0.7rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        line-height: 1.5;
+        color: #fff
+    }
+
+    .type-box-sml {
+        margin: 0;
+    }
+
+    .grass {
+        background-color: #8bc560;
+    }
+
+    .poison {
+        background-color: #94489b;
     }
 </style>
