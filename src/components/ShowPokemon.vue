@@ -53,7 +53,7 @@ export default {
             const mainImage = response.data.sprites.other.dream_world.front_default;
             const secondImage = response.data.sprites.front_default;
             this.pokeimage = mainImage || secondImage;
-            this.pokename = response.data.name;
+            this.pokename = response.data.species.name.toUpperCase();
             this.pokeindex = response.data.id;
             this.poketypes = response.data.types;
             this.pokeweight = response.data.weight;
@@ -81,7 +81,7 @@ export default {
         background-color: rgba(0, 0, 0, 0.5);
     }
     .logo {
-        width: 15%;
+        width: 120px;
         margin-top: 10px;
         margin-bottom: 10px;
     }
@@ -92,8 +92,13 @@ export default {
         align-items: center;
         justify-content: center;
         background-color: rgba(255, 255, 255, 0.5);
-        padding: 3rem 3rem;
+        padding: 1.5rem;
         border-radius: 3rem; 
+    }
+
+    h3 {
+        font-size: 3rem;
+        margin-top: 0;
     }
 
     .identification {
@@ -101,7 +106,7 @@ export default {
     }
 
     .pokeimg {
-        width: 12vw;
+        width: 200px;
         margin-bottom: 0;
     }
 

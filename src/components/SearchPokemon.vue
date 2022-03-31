@@ -3,8 +3,8 @@
     <div class="form">
       <img class="imglogo" src="../assets/pokedex.png" alt="pokemon logo">
       <form>
-        <input class="ipt-txt" type="text" placeholder="Search Pokemon" v-model="value">
-        <Button @click="showPokemon(value)" icon="pi pi-search" class="ipt-btn" type="submit"/>
+        <input class="ipt-txt" type="text" placeholder="Search Pokemon" v-model="value" ref="filter">
+        <Button @click="showPokemon(value.toLowerCase())" icon="pi pi-search" class="ipt-btn" type="submit"/>
       </form>
     </div>
   </div>
@@ -12,6 +12,7 @@
 
 <script>
 import api from "../service/pokemon-service.js";
+import { ref, onMounted, nextTick } from 'vue';
 
 export default {
   data() {
@@ -21,6 +22,19 @@ export default {
       search: '',
       value: ''
     }
+  },
+  setup() {
+    const filter = ref(null);
+
+    onMounted(() => {
+      nextTick(() => {
+        filter.value.focus();
+      });
+    });
+
+    return {
+      filter
+    };
   },
   created() {
     api.get('pokemon?limit=151&offset=0').then((response) => {
@@ -77,6 +91,7 @@ export default {
     background-color: whitesmoke;
     opacity: 0.9;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+    outline: none;
   }
 
   .ipt-btn {
