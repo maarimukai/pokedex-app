@@ -57,9 +57,7 @@ export default {
             this.pokeindex = response.data.id;
             this.poketypes = response.data.types;
             this.pokeweight = response.data.weight;
-            this.pokeheight = response.data.height;
-
-            
+            this.pokeheight = response.data.height;            
         });
 
     },
