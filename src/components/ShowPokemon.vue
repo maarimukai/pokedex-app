@@ -11,25 +11,29 @@
         </div>
         <div>
             <div class="pokeImage">
-                <img class="pokeimg" :src="currentImg" alt="Placeholder image">
+                <img class="pokeimg" :src="pokeimage" alt="Placeholder image">
             </div>
-            <div class="size">
-                <p>Weight: {{ pokeweight / 10 }} kg </p>
-                <p>Height: {{ pokeheight / 10 }} m </p>
-            </div>
-        </div>
-        <div class="pokeInfos">
             <div class="pokeType">
                 <h4>Type</h4> 
                 <div class="type-box" v-for="item in poketypes" :key="item" :class="item.type.name.toLowerCase()">
                     <p>{{ item.type.name.toUpperCase() }}</p>
                 </div>
             </div>
+            <div class="size">
+                <p>
+                    <span>Weight:</span> {{ pokeweight / 10 }} kg
+                </p>
+                <p>
+                    <span>Height:</span> {{ pokeheight / 10 }} m
+                </p>
+            </div>
+        </div>
+        <div class="pokeInfos">
+            <div class="pokeStats">
+                <p>Stats</p>
+            </div>
             <div class="pokeAttacks">
                 <p>Special Attacks</p>
-            </div>
-            <div class="pokeWeak">
-                <p>Weakness</p>
             </div>
         </div>
     </main>
@@ -46,17 +50,22 @@ export default {
     },
     created() {
         api.get(`https://pokeapi.co/api/v2/pokemon/${this.$route.params.id}`).then((response) => {
-            this.currentImg = response.data.sprites.other.dream_world.front_default;
+            const mainImage = response.data.sprites.other.dream_world.front_default;
+            const secondImage = response.data.sprites.front_default;
+            this.pokeimage = mainImage || secondImage;
             this.pokename = response.data.name;
             this.pokeindex = response.data.id;
             this.poketypes = response.data.types;
             this.pokeweight = response.data.weight;
             this.pokeheight = response.data.height;
+
+            
         });
+
     },
     data() {
         return {
-            currentImg: '',
+            pokeimage: '',
             pokemon: {
                 type:''
             }
