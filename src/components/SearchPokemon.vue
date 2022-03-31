@@ -3,7 +3,7 @@
     <div class="form">
       <img class="imglogo" src="../assets/pokedex.png" alt="pokemon logo">
       <form>
-        <input class="ipt-txt" type="text" placeholder="Search Pokemon" v-model="value" ref="filter">
+        <input class="ipt-txt" type="text" placeholder="search pokemon" v-model="value" ref="filter">
         <Button @click="showPokemon(value.toLowerCase())" icon="pi pi-search" class="ipt-btn" type="submit"/>
       </form>
     </div>

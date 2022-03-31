@@ -9,32 +9,40 @@
             <h3>#{{ pokeindex }}. {{ pokename }}</h3>
             <!-- <p>{{ name || upperCase }}</p> -->
         </div>
-        <div>
-            <div class="pokeImage">
-                <img class="pokeimg" :src="pokeimage" alt="Placeholder image">
-            </div>
-            <div class="pokeType">
-                <h4>Type</h4> 
-                <div class="type-box" v-for="item in poketypes" :key="item" :class="item.type.name.toLowerCase()">
-                    <p>{{ item.type.name.toUpperCase() }}</p>
+        <div class="content">
+            <div class="basicInfo">
+                <div class="pokeImage">
+                    <img class="pokeimg" :src="pokeimage" alt="Placeholder image">
+                </div>
+                <div class="pokeType">
+                    <h4>Type</h4> 
+                    <div class="type-box" v-for="item in poketypes" :key="item" :class="item.type.name.toLowerCase()">
+                        <p>{{ item.type.name.toUpperCase() }}</p>
+                    </div>
+                </div>
+                <div class="size">
+                    <p>
+                        <span>Weight:</span> {{ pokeweight / 10 }} kg
+                    </p>
+                    <p>
+                        <span>Height:</span> {{ pokeheight / 10 }} m
+                    </p>
                 </div>
             </div>
-            <div class="size">
-                <p>
-                    <span>Weight:</span> {{ pokeweight / 10 }} kg
-                </p>
-                <p>
-                    <span>Height:</span> {{ pokeheight / 10 }} m
-                </p>
-            </div>
-        </div>
-        <div class="pokeInfos">
-            <div class="pokeStats">
-                <p>Stats</p>
-            </div>
-            <div class="pokeAttacks">
-                <p>Special Attacks</p>
-            </div>
+            <div class="pokeInfos">
+                <div class="pokeStats">
+                    <h4>Stats</h4>
+                    <div v-for="info in pokestats" :key="info">
+                        <p>{{ info.stat.name }}: {{ info.base_stat }} </p>
+                    </div>
+                </div>
+                <div class="pokeAbilities">
+                    <h4>Abilities</h4>
+                    <div v-for="ability in pokeability" :key="ability">
+                        <p>{{ ability.ability.name }}</p>
+                    </div>
+                </div>
+            </div>            
         </div>
     </main>
 </template>
@@ -57,7 +65,10 @@ export default {
             this.pokeindex = response.data.id;
             this.poketypes = response.data.types;
             this.pokeweight = response.data.weight;
-            this.pokeheight = response.data.height;            
+            this.pokeheight = response.data.height;
+            this.pokestats = response.data.stats;
+            this.pokeability = response.data.abilities;
+            
         });
 
     },
@@ -75,6 +86,9 @@ export default {
 
 <style lang="scss">
 @import "../stylespoke/typecolor";
+    body {
+        background-color: #7F0D0D;
+    }
 
     nav {
         text-align: center;
@@ -87,22 +101,44 @@ export default {
     }
 
     main {
+        width: 1000px;
+        height: 500px; 
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
         background-color: rgba(255, 255, 255, 0.5);
         padding: 1.5rem;
-        border-radius: 3rem; 
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 3rem;
     }
 
     h3 {
         font-size: 3rem;
         margin-top: 0;
+        margin-bottom: 30px;
+        text-align: center;
     }
 
-    .identification {
+    .content {
         display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .basicInfo{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        // margin-left: 80px;
+        margin-right: 150px;
+    }
+
+    .pokeInfos {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        margin-left: 150px;
+        // margin-right: 80px;
     }
 
     .pokeimg {
