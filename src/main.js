@@ -6,6 +6,7 @@ import Pokemon from "./views/Pokemon.vue";
 
 import PrimeVue from 'primevue/config';
 import Button from 'primevue/button';
+import Chart from 'primevue/chart';
 import 'primeicons/primeicons.css';
 
 const routes = [
@@ -21,6 +22,7 @@ const router = createRouter({
 
 const app = createApp(App);
 app.component("Button", Button);
+app.component("Chart", Chart);
 app.use(PrimeVue);
 app.use(router);
 

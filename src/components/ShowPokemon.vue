@@ -35,12 +35,12 @@
                     <div v-for="info in pokestats" :key="info">
                         <p>{{ info.stat.name }}: {{ info.base_stat }} </p>
                     </div>
+                    <p>HP: 255 / ATTACK: 200 / DEFENSE: 250 / SPECIAL ATTACK: 200 / SPECIAL DEFENSE: 250 / SPEED: 250</p>
                 </div>
                 <div class="pokeAbilities">
                     <h4>Abilities</h4>
                     <div v-for="ability in pokeability" :key="ability">
                         <p>{{ ability.ability.name }}</p>
-                        <p>HP: 255 / ATTACK: 200 / DEFENSE: 250 / SPECIAL ATTACK: 200 / SPECIAL DEFENSE: 250 / SPEED: 250</p>
                     </div>
                 </div>
             </div>            
@@ -69,7 +69,6 @@ export default {
             this.pokeheight = response.data.height;
             this.pokestats = response.data.stats;
             this.pokeability = response.data.abilities;
-            
         });
 
     },
