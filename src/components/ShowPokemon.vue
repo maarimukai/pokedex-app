@@ -40,6 +40,7 @@
                     <h4>Abilities</h4>
                     <div v-for="ability in pokeability" :key="ability">
                         <p>{{ ability.ability.name }}</p>
+                        <p>HP: 255 / ATTACK: 200 / DEFENSE: 250 / SPECIAL ATTACK: 200 / SPECIAL DEFENSE: 250 / SPEED: 250</p>
                     </div>
                 </div>
             </div>            
@@ -142,7 +143,7 @@ export default {
     }
 
     .pokeimg {
-        width: 200px;
+        height: 200px;
         margin-bottom: 0;
     }
 
