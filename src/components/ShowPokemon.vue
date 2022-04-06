@@ -6,8 +6,9 @@
     </nav>
     <main>
         <div class="identification">
+            <button @click="changePage('prev')" :disabled="['1', 'bulbasaur'].includes(this.$route.params.id)" >Anterior</button>
             <h3>#{{ pokeindex }}. {{ pokename }}</h3>
-            <!-- <p>{{ name || upperCase }}</p> -->
+            <button @click="changePage('next')">Proximo</button>
         </div>
         <div class="content">
             <div class="basicInfo">
@@ -32,14 +33,11 @@
             <div class="pokeInfos">
                 <div class="pokeStats">
                     <h4>Stats</h4>
-                    <div v-for="info in pokestats" :key="info">
-                        <p>{{ info.stat.name }}: {{ info.base_stat }} </p>
-                    </div>
-                    <p>HP: 255 / ATTACK: 200 / DEFENSE: 250 / SPECIAL ATTACK: 200 / SPECIAL DEFENSE: 250 / SPEED: 250</p>
+                    <Chart type="radar" :data="this.chartData" :options="this.chartOption" />
                 </div>
                 <div class="pokeAbilities">
                     <h4>Abilities</h4>
-                    <div v-for="ability in pokeability" :key="ability">
+                    <div v-for="ability in pokeability" :key="ability" class="capitalized">
                         <p>{{ ability.ability.name }}</p>
                     </div>
                 </div>
@@ -69,14 +67,92 @@ export default {
             this.pokeheight = response.data.height;
             this.pokestats = response.data.stats;
             this.pokeability = response.data.abilities;
-        });
+            
+            var nameStats = []
+            for (const info of this.pokestats) {  
+                if(info.stat.name === "special-defense") {
+                    nameStats.push("SP DEF")               
+                } else if(info.stat.name === "special-attack") {
+                    nameStats.push("SP ATK") 
+                } else {
+                    nameStats.push(info.stat.name.toUpperCase())   
+                }
+            }
 
+            var valueStats = []
+            for (const info of this.pokestats) {
+                valueStats.push(info.base_stat)    
+            }
+
+            this.chartData = {
+                labels: nameStats,
+                datasets: [
+                    {
+                        backgroundColor: 'rgba(179,181,198,0.2)',
+                        borderColor: 'rgba(179,181,198,1)',
+                        pointBackgroundColor: 'rgba(179,181,198,1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(179,181,198,1)',
+                        data: valueStats
+                    },
+                ]
+            }
+            this.chartOption = {
+                plugins: {
+                    legend: {
+                        display: false,
+                        labels: {
+                            color: '#495057'
+                        }
+                    }
+                },
+                scales: {
+                    r: {
+                        pointLabels: {
+                            color: '#495057',
+                        },
+                        grid: {
+                            color: '#ebedef',
+                        },
+                        angleLines: {
+                            color: '#ebedef'
+                        },
+                        suggestedMin: 0,
+                        min: 0,
+                        max: 255
+                    }
+                }
+            }
+        });
     },
     data() {
         return {
             pokeimage: '',
             pokemon: {
                 type:''
+            },
+            
+        }
+    },
+    methods: {
+        goToNextPokemon() {
+            api.get(`https://pokeapi.co/api/v2/pokemon/${this.$route.params.id}`).then((response) => {
+                this.pokeindex = response.data.id;
+            });
+        window.location.href = `/pokemon/${this.pokeindex + 1}`;
+        },
+        goToPreviousPokemon() {
+            api.get(`https://pokeapi.co/api/v2/pokemon/${this.$route.params.id}`).then((response) => {
+                this.pokeindex = response.data.id;
+            });
+        window.location.href = `/pokemon/${this.pokeindex - 1}`;
+        },
+        changePage(prevOrNext) {
+            if(prevOrNext === 'prev') {
+                this.goToPreviousPokemon();
+            } else {
+                this.goToNextPokemon();
             }
         }
     },
@@ -94,6 +170,7 @@ export default {
         text-align: center;
         background-color: rgba(0, 0, 0, 0.5);
     }
+
     .logo {
         width: 120px;
         margin-top: 10px;
@@ -110,6 +187,12 @@ export default {
         margin-left: auto;
         margin-right: auto;
         border-radius: 3rem;
+    }
+
+    .identification {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 
     h3 {
@@ -164,5 +247,9 @@ export default {
 
     .type-box-sml {
         margin: 0;
+    }
+
+    .capitalized {
+        text-transform: capitalize;
     }
 </style>
