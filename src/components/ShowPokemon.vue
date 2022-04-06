@@ -5,10 +5,10 @@
         </a>
     </nav>
     <main>
-        <div class="identification">
-            <button @click="changePage('prev')" :disabled="['1', 'bulbasaur'].includes(this.$route.params.id)" >Anterior</button>
+        <div class="identification" :class="this.poketypes ? this.poketypes[0].type.name.toLowerCase() : ''">
+            <Button icon="pi pi-arrow-left" @click="changePage('prev')" :disabled="['1', 'bulbasaur'].includes(this.$route.params.id)" class="ipt-bttn" :class="this.poketypes ? this.poketypes[0].type.name.toLowerCase() : ''" />
             <h3>#{{ pokeindex }}. {{ pokename }}</h3>
-            <button @click="changePage('next')">Proximo</button>
+            <Button icon="pi pi-arrow-right" @click="changePage('next')" class="ipt-bttn" :class="this.poketypes ? this.poketypes[0].type.name.toLowerCase() : ''"/>
         </div>
         <div class="content">
             <div class="basicInfo">
@@ -23,10 +23,10 @@
                 </div>
                 <div class="size">
                     <p>
-                        <span>Weight:</span> {{ pokeweight / 10 }} kg
+                        <strong>Weight:</strong> {{ pokeweight / 10 }} kg
                     </p>
                     <p>
-                        <span>Height:</span> {{ pokeheight / 10 }} m
+                        <strong>Height:</strong> {{ pokeheight / 10 }} m
                     </p>
                 </div>
             </div>
@@ -191,15 +191,29 @@ export default {
 
     .identification {
         display: flex;
-        align-items: center;
+        align-content: center;
         justify-content: space-between;
+        box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+        border-radius: 80px;
+        padding-top: 3.5px;
     }
 
     h3 {
         font-size: 3rem;
         margin-top: 0;
-        margin-bottom: 30px;
+        margin-bottom: 0;
         text-align: center;
+    }
+
+    .ipt-bttn {
+        width: 4rem;
+        height: 4rem;
+        font-size: 1.5rem;
+        background-color: Transparent;
+        border: none;
+        cursor: pointer;
+        margin-left: 20px;
+        margin-right: 20px;
     }
 
     .content {
@@ -216,18 +230,14 @@ export default {
         margin-right: 150px;
     }
 
-    .pokeInfos {
-        display: flex;
-        flex-direction: column;
-        align-content: center;
-        margin-left: 150px;
-        // margin-right: 80px;
-    }
-
     .pokeimg {
         height: 200px;
         margin-bottom: 0;
     }
+
+    // h4 {
+    //     margin: 0;
+    // }
 
     .type-box {
         display: inline-block;
@@ -242,7 +252,6 @@ export default {
         font-weight: bold;
         text-transform: uppercase;
         line-height: 1.5;
-        color: #fff
     }
 
     .type-box-sml {
@@ -252,4 +261,13 @@ export default {
     .capitalized {
         text-transform: capitalize;
     }
+
+    .pokeInfos {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        margin-left: 150px;
+        // margin-right: 80px;
+    }
+
 </style>
