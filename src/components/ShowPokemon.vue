@@ -30,15 +30,23 @@
                     </p>
                 </div>
             </div>
+            <div class="pokeStats">
+                <h4>Base Stats</h4>
+                <Chart type="radar" :data="this.chartData" :options="this.chartOption" class="chart-radar"/>
+            </div>
             <div class="pokeInfos">
-                <div class="pokeStats">
-                    <h4>Stats</h4>
-                    <Chart type="radar" :data="this.chartData" :options="this.chartOption" />
-                </div>
                 <div class="pokeAbilities">
                     <h4>Abilities</h4>
                     <div v-for="ability in pokeability" :key="ability" class="capitalized">
-                        <p>{{ ability.ability.name }}</p>
+                        <p class="pokedata">{{ ability.ability.name }}</p>
+                    </div>
+                </div>
+                <div class="pokeMoves">
+                    <h4>Moves</h4>
+                    <div class="scroller">
+                        <div v-for="move in pokemoves" :key="move" class="capitalized ">
+                            <p class="pokedata">{{ move.move.name }}</p>
+                        </div>
                     </div>
                 </div>
             </div>            
@@ -67,6 +75,7 @@ export default {
             this.pokeheight = response.data.height;
             this.pokestats = response.data.stats;
             this.pokeability = response.data.abilities;
+            this.pokemoves = response.data.moves;
             
             var nameStats = []
             for (const info of this.pokestats) {  
@@ -89,11 +98,11 @@ export default {
                 datasets: [
                     {
                         backgroundColor: 'rgba(179,181,198,0.2)',
-                        borderColor: 'rgba(179,181,198,1)',
-                        pointBackgroundColor: 'rgba(179,181,198,1)',
+                        borderColor: 'rgba(78,79,87,0.9)',
+                        pointBackgroundColor: 'rgba(179,181,198,0.7)',
                         pointBorderColor: '#fff',
                         pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgba(179,181,198,1)',
+                        pointHoverBorderColor: 'rgba(179,181,198,0.5)',
                         data: valueStats
                     },
                 ]
@@ -107,16 +116,21 @@ export default {
                         }
                     }
                 },
+                options: {
+                    layout: {
+                        autoPadding: false
+                    }
+                },
                 scales: {
                     r: {
                         pointLabels: {
-                            color: '#495057',
+                            color: '#000',
                         },
                         grid: {
-                            color: '#ebedef',
+                            color: '#626469',
                         },
                         angleLines: {
-                            color: '#ebedef'
+                            color: '#787A80'
                         },
                         suggestedMin: 0,
                         min: 0,
@@ -178,8 +192,8 @@ export default {
     }
 
     main {
-        width: 1000px;
-        height: 500px; 
+        width: 90vw;
+        height: 80vh; 
         display: flex;
         flex-direction: column;
         background-color: rgba(255, 255, 255, 0.5);
@@ -190,16 +204,16 @@ export default {
     }
 
     .identification {
+        height: 3.5rem;
         display: flex;
         align-content: center;
         justify-content: space-between;
         box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
         border-radius: 80px;
-        padding-top: 3.5px;
     }
 
     h3 {
-        font-size: 3rem;
+        font-size: 2.5rem;
         margin-top: 0;
         margin-bottom: 0;
         text-align: center;
@@ -219,15 +233,14 @@ export default {
     .content {
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: space-between;
+        margin-top: 1rem;
     }
 
     .basicInfo{
         display: flex;
         flex-direction: column;
-        align-items: center;
-        // margin-left: 80px;
-        margin-right: 150px;
+        width: 8rem;
     }
 
     .pokeimg {
@@ -235,9 +248,10 @@ export default {
         margin-bottom: 0;
     }
 
-    // h4 {
-    //     margin: 0;
-    // }
+    h4 {
+        margin-top: 1rem;
+        margin-bottom: 0.6rem;
+    }
 
     .type-box {
         display: inline-block;
@@ -258,16 +272,49 @@ export default {
         margin: 0;
     }
 
-    .capitalized {
-        text-transform: capitalize;
+    .pokeStats {
+        width: 40vw;
+
     }
 
     .pokeInfos {
         display: flex;
         flex-direction: column;
         align-content: center;
-        margin-left: 150px;
-        // margin-right: 80px;
+        width: 25vw;
+        height: 60vh;
     }
+
+    .capitalized {
+        text-transform: capitalize;
+        display: inline-block;
+        text-align: center;
+        padding: 0.75 rem;
+        margin-right: 1rem;
+    }
+
+    .pokedata {
+        margin: 0;
+    }
+
+    .scroller {
+        overflow-y: scroll;
+        scrollbar-color: #3a405a #f5f5f5;
+        scrollbar-width: none;
+        height: 40vh;
+    }
+
+    .scroller::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .scroller::-webkit-scrollbar-thumb {
+        border-radius: 20px;
+    }
+
+    .scroller::-webkit-scrollbar-thumb:hover {
+        background: #3a405a; 
+    }
+
 
 </style>
