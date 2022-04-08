@@ -23,10 +23,10 @@
                 </div>
                 <div class="size">
                     <p>
-                        <strong>Weight:</strong> {{ pokeweight / 10 }} kg
+                        <strong style="font-size: 1.5rem; margin-right: 1rem;">Weight:</strong> {{ pokeweight / 10 }} kg
                     </p>
                     <p>
-                        <strong>Height:</strong> {{ pokeheight / 10 }} m
+                        <strong style="font-size: 1.5rem; margin-right: 1rem;">Height:</strong> {{ pokeheight / 10 }} m
                     </p>
                 </div>
             </div>
@@ -100,8 +100,8 @@ export default {
                         backgroundColor: 'rgba(179,181,198,0.2)',
                         borderColor: 'rgba(78,79,87,0.9)',
                         pointBackgroundColor: 'rgba(179,181,198,0.7)',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
+                        pointBorderColor: '#000',
+                        pointHoverBackgroundColor: '#000',
                         pointHoverBorderColor: 'rgba(179,181,198,0.5)',
                         data: valueStats
                     },
@@ -112,7 +112,7 @@ export default {
                     legend: {
                         display: false,
                         labels: {
-                            color: '#495057'
+                            color: '#495057',
                         }
                     }
                 },
@@ -125,6 +125,7 @@ export default {
                     r: {
                         pointLabels: {
                             color: '#000',
+
                         },
                         grid: {
                             color: '#626469',
@@ -196,7 +197,7 @@ export default {
         height: 80vh; 
         display: flex;
         flex-direction: column;
-        background-color: rgba(255, 255, 255, 0.5);
+        background-color: rgba(255, 255, 255, 0.6);
         padding: 1.5rem;
         margin-left: auto;
         margin-right: auto;
@@ -210,6 +211,8 @@ export default {
         justify-content: space-between;
         box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
         border-radius: 80px;
+        padding-top: 0.3rem;
+        padding-bottom: 0.3rem;
     }
 
     h3 {
@@ -221,7 +224,6 @@ export default {
 
     .ipt-bttn {
         width: 4rem;
-        height: 4rem;
         font-size: 1.5rem;
         background-color: Transparent;
         border: none;
@@ -235,12 +237,15 @@ export default {
         align-items: center;
         justify-content: space-between;
         margin-top: 1rem;
+        margin-left: 7rem;
+        margin-right: auto;
     }
 
     .basicInfo{
         display: flex;
         flex-direction: column;
-        width: 8rem;
+        width: 15rem;
+        // margin-left: 3.5rem;
     }
 
     .pokeimg {
@@ -249,6 +254,7 @@ export default {
     }
 
     h4 {
+        font-size: 1.5rem;
         margin-top: 1rem;
         margin-bottom: 0.6rem;
     }
@@ -273,16 +279,18 @@ export default {
     }
 
     .pokeStats {
-        width: 40vw;
-
+        width: 27vw;
+        margin-left: 4rem;
+        margin-right: 7rem;
     }
 
     .pokeInfos {
         display: flex;
         flex-direction: column;
         align-content: center;
-        width: 25vw;
+        width: 20vw;
         height: 60vh;
+        // margin-right: 2rem;
     }
 
     .capitalized {
